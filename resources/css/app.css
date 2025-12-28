@@ -1,0 +1,197 @@
+/******************************
+   ADMIN LAYOUT WRAPPER
+******************************/
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background: #f8fafc;
+}
+
+/******************************
+   SIDEBAR
+******************************/
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background: #0f172a;
+    color: #fff;
+    transition: width 0.3s ease, transform 0.3s ease;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* COLLAPSED (DESKTOP ICON MODE) */
+.sidebar.collapsed {
+    width: 70px;
+}
+
+/******************************
+   SIDEBAR HEADER
+******************************/
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid #1e293b;
+}
+
+.sidebar-header h4 {
+    font-size: 18px;
+    margin: 0;
+    white-space: nowrap;
+    transition: opacity 0.2s ease;
+}
+
+/* hide text when collapsed */
+.sidebar.collapsed .sidebar-header h4 {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* hamburger INSIDE sidebar */
+.sidebar-toggle {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+/******************************
+   SIDEBAR LINKS
+******************************/
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.sidebar-links li a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    color: #cbd5f5;
+    text-decoration: none;
+    transition: background 0.2s ease;
+    white-space: nowrap;
+}
+
+.sidebar-links li a:hover {
+    background: #1e293b;
+    color: #fff;
+}
+
+.sidebar-links i {
+    font-size: 1.3rem;
+    min-width: 24px;
+    text-align: center;
+}
+
+/* hide link text when collapsed */
+.sidebar.collapsed .sidebar-links span {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/******************************
+   SIDEBAR FOOTER
+******************************/
+.sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid #1e293b;
+}
+
+.logout-btn {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #f87171;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* hide logout text when collapsed */
+.sidebar.collapsed .logout-btn span {
+    opacity: 0;
+}
+
+/******************************
+   ADMIN CONTENT
+******************************/
+.admin-content {
+    margin-left: 260px;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+    width: 100%;
+}
+
+.blogger-content {
+    margin-left: 260px;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+    /* width: 100%; */
+}
+
+/* adjust content when collapsed */
+.sidebar.collapsed ~ .admin-content {
+    margin-left: 70px;
+}
+
+.has-sub .submenu {
+    list-style: none;
+    padding-left: 40px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.has-sub.open .submenu {
+    max-height: 200px; /* enough for 2–3 links */
+}
+
+.has-sub .arrow {
+    transition: transform 0.3s ease;
+}
+
+.has-sub.open .arrow {
+    transform: rotate(180deg);
+}
+
+
+/******************************
+   MOBILE BEHAVIOR
+******************************/
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: 260px;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar.collapsed {
+        width: 260px; /* ignore collapse on mobile */
+    }
+
+    .admin-content {
+        margin-left: 0;
+    }
+}
+
+
+
+/****************************** END OF SIDEBAR STYLING  ************************/
