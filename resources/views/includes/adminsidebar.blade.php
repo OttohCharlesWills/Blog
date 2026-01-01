@@ -43,14 +43,14 @@
                                 <span>View Blogs</span>
                             </a>
                         </li>
-                    </ul>
-                </li>
 
-                <li>
-                    <a href="#">
-                        <i class="bi bi-tags"></i>
-                        <span>Categories</span>
-                    </a>
+                        <li>
+                            <a href="{{ route('admin.blogs.pending') }}">
+                                <i class="bi bi-journals"></i>
+                                <span>Pending Blogs</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li>

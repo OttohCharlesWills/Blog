@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminBlogController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Blogger\BloggerController;
 
@@ -84,4 +85,25 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])
             ->name('users.destroy');
 });
+
+
+// ROUTES FOR ADMIN BLOGS
+
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+
+        Route::get('/blogs/pending', [AdminBlogController::class, 'pending'])->name('blogs.pending');
+
+        Route::post('/blogs/{blog}/approve', [AdminBlogController::class, 'approve'])->name('blogs.approve');
+
+        Route::post('/blogs/{blog}/revoke', [AdminBlogController::class, 'revoke'])->name('blogs.revoke');
+});
+
+// ROUTES FOR ADMIN DASHBOARD
+
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    
+        Route::get('/activities/latest', [AdminDashboardController::class, 'latestActivities'])
+            ->name('activities.latest');
+    });
+
 
