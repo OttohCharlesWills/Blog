@@ -1,6 +1,9 @@
 @extends('layouts.admin')
 
 @section('admincontent')
+
+    <h3>Welcome {{ Auth::user()->name }}</h3><br>
+
     <div class="row g-3">
         <div class="col-md-3">
             <div class="card p-3">
@@ -37,32 +40,41 @@
     </ul>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const feed = document.getElementById('activity-feed');
 
     function fetchActivities() {
-        fetch("{{ route('admin.activities.latest') }}")
-            .then(res => res.json())
-            .then(data => {
-                feed.innerHTML = ''; // clear current feed
-                data.forEach(item => {
-                    const li = document.createElement('li');
-                    li.classList.add('list-group-item');
-                    li.innerHTML = `<strong>${item.title}</strong><br>
-                                    <small>${item.description}</small><br>
-                                    <small class="text-muted">${new Date(item.created_at).toLocaleTimeString()}</small>`;
-                    feed.appendChild(li);
-                });
-            })
-            .catch(err => console.error('Error fetching activities:', err));
+        fetch("{{ route('admin.activities.latest') }}", {
+            headers: { 'Accept': 'application/json' }
+        })
+        .then(res => res.json())
+        .then(data => {
+            feed.innerHTML = '';
+
+            data.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex align-items-center justify-content-between';
+
+                li.innerHTML = `
+                    <div class="d-flex align-items-center gap-2">
+                        <strong>${item.title}</strong>
+                        <span class="text-muted">— ${item.description}</span>
+                    </div>
+                    <small class="text-muted">
+                        ${new Date(item.created_at).toLocaleTimeString()}
+                    </small>
+                `;
+
+                feed.appendChild(li);
+            });
+        })
+        .catch(err => console.error('Activity fetch error:', err));
     }
 
-    // first fetch
     fetchActivities();
-
-    // poll every 5 seconds
     setInterval(fetchActivities, 5000);
 });
 </script>
+
 
 @endsection

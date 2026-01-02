@@ -4,23 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Activity;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
     /**
@@ -32,8 +22,6 @@ class RegisterController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -41,10 +29,7 @@ class RegisterController extends Controller
     }
 
     /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * Validator for registration.
      */
     protected function validator(array $data)
     {
@@ -56,26 +41,30 @@ class RegisterController extends Controller
     }
 
     /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
+     * Create user + log activity.
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
 
-            // 🔒 FORCE THESE VALUES
-            'role' => 'blogger',                 // nobody can self-register as admin
-            'is_active' => true,                 // account enabled by default
-            'onboarding_completed' => false,     // popup onboarding not done yet
-            'focus' => null,                     // will be filled after first login
-            'bio' => null,                       // optional, filled later
-            'avatar' => null,                     // optional, filled later
+            // 🔒 FORCE SAFE DEFAULTS
+            'role' => 'blogger',
+            'is_active' => true,
+            'onboarding_completed' => false,
+            'focus' => null,
+            'bio' => null,
+            'avatar' => null,
         ]);
-    }
 
+        // 🔥 ACTIVITY LOG
+        Activity::log(
+            'New User Registered',
+            $user->name . ' created a new account'
+        );
+
+        return $user;
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Blog;
+use App\Models\activity;
 
 class AdminDashboardController extends Controller
 {
