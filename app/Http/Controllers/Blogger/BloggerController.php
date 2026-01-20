@@ -55,7 +55,7 @@ class BloggerController extends Controller
         );
 
         return redirect()
-            ->route('bloggers.index')
+            ->route('blogger.bloggers.index')
             ->with('success', 'Blog submitted for approval ✅');
     }
 

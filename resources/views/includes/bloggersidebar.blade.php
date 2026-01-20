@@ -8,7 +8,7 @@
         <!-- Sidebar -->
         <aside id="sidebar" class="sidebar">
             <div class="sidebar-header">
-                <h4>Admin Panel</h4>
+                <h4>Blogger Panel</h4>
                 {{-- <button id="closeSidebar" class="btn btn-sm btn-outline-light">
                     <i class="bi bi-x-lg"></i>
                 </button> --}}
@@ -48,27 +48,13 @@
 
                 <li>
                     <a href="#">
-                        <i class="bi bi-tags"></i>
-                        <span>Categories</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <i class="bi bi-people"></i>
-                        <span>Users</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
                         <i class="bi bi-chat-left-text"></i>
                         <span>Comments</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="{{ route('bloggers.settings.settings') }}">
                         <i class="bi bi-gear"></i>
                         <span>Settings</span>
                     </a>

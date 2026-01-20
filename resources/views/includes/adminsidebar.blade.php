@@ -68,7 +68,7 @@
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="{{route('admin.settings.settings')}}">
                         <i class="bi bi-gear"></i>
                         <span>Settings</span>
                     </a>

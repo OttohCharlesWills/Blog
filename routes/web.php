@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminBlogController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Blogger\BloggerController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Blogger\BloggerDashboardController;
+use App\Http\Controllers\Admin\Activity;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +29,7 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/home', [BloggerDashboardController::class, 'index'])->name('home');
 
 
 // ROUTES FOR GOOGLE CONTROLLER
@@ -107,3 +110,29 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     });
 
 
+
+
+    // ROUTES FOR PROFILE PICTURE AND CHANGE OF NAME
+
+    Route::middleware(['auth'])->group(function () {
+
+        // BLOGGER
+        Route::view('/blogger/profile', 'bloggers.profile.account')->name('bloggers.profile.account');
+        Route::post('/blogger/profile/account', [ProfileController::class, 'updateAccount'])->name('blogger.profile.account');
+        Route::post('/blogger/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('blogger.profile.avatar');
+        Route::delete('/profile/delete', [ProfileController::class, 'deleteProfile'])->name('profile.delete');
+
+        // ADMIN
+        Route::view('/admin/profile', 'admin.profile.account')->name('admin.profile.account');
+        Route::view('/admin/password', 'admin.changeofpassword.dob')->name('admin.changeofpassword.dob');
+        Route::view('/blogger/password', 'bloggers.changeofpassword.dob')->name('bloggers.changeofpassword.dob');
+        
+        Route::post('/admin/profile/account', [ProfileController::class, 'updateAccount'])->name('admin.profile.update');
+        Route::post('/admin/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('admin.profile.avatar');
+
+    });
+
+    // ROUTES FOR SETTINGS
+
+    Route::view('admin/settings', 'admin.settings.settings')->name('admin.settings.settings');
+    Route::view('blogger/settings', 'bloggers.settings.settings')->name('bloggers.settings.settings');
