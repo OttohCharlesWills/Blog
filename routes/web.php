@@ -28,8 +28,10 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/home', [BloggerDashboardController::class, 'index'])->name('home');
+});
+
 
 
 // ROUTES FOR GOOGLE CONTROLLER
