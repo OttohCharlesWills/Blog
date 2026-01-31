@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class BloggerController extends Controller
 {
@@ -16,17 +17,27 @@ class BloggerController extends Controller
                      ->latest()
                      ->get();
 
-        return view('bloggers.index', compact('blogs'));
+        return view('bloggers.blogs.index', compact('blogs'));
+    }
+
+    public function pending()
+    {
+        $pendingBlogs = Blog::where('user_id', auth()->id())
+                            ->where('status', 'pending')
+                            ->latest()
+                            ->get();
+
+        return view('bloggers.blogs.pending', compact('pendingBlogs'));
     }
 
     public function create()
     {
-        return view('bloggers.create');
+        return view('bloggers.blogs.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+            $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
             'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
@@ -35,8 +46,13 @@ class BloggerController extends Controller
         $coverPath = null;
 
         if ($request->hasFile('cover_image')) {
-            $coverPath = $request->file('cover_image')
-                ->store('blog_covers', 'public');
+            $uploadedFileUrl = Cloudinary::upload($request->file('cover_image')->getRealPath(), [
+                'folder' => 'blog_covers',
+                'overwrite' => true,
+                'resource_type' => 'image'
+            ])->getSecurePath();
+
+            $coverPath = $uploadedFileUrl; // this is the full Cloudinary URL
         }
 
         $blog = Blog::create([
@@ -63,7 +79,7 @@ class BloggerController extends Controller
     {
         abort_if($blog->user_id !== auth()->id(), 403);
 
-        return view('bloggers.edit', compact('blog'));
+        return view('bloggers.blogs.edit', compact('blog'));
     }
 
     public function update(Request $request, Blog $blog)

@@ -38,6 +38,13 @@
                         </li>
 
                         <li>
+                            <a href="{{ route('blogger.bloggers.pending') }}">
+                                <i class="bi bi-journals"></i>
+                                <span>Pending Blogs</span>
+                            </a>
+                        </li>
+
+                        <li>
                             <a href="{{ route('blogger.bloggers.index') }}">
                                 <i class="bi bi-journals"></i>
                                 <span>View Blogs</span>
@@ -49,7 +56,14 @@
                 <li>
                     <a href="#">
                         <i class="bi bi-chat-left-text"></i>
-                        <span>Comments</span>
+                        <span>Bloggers Guidelines</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="bi bi-chat-left-text"></i>
+                        <span>Wallet</span>
                     </a>
                 </li>
 

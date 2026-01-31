@@ -16,7 +16,7 @@
 
                         {{-- Placeholder for future links --}}
                         <a href="{{ route('bloggers.changeofpassword.dob') }}" class="list-group-item list-group-item-action">
-                            <i class="bi bi-key-fill me-2"></i> Change Password
+                            <i class="bi bi-key-fill me-2"></i> Name
                         </a>
                         <a href="#" class="list-group-item list-group-item-action">
                             <i class="bi bi-bell-fill me-2"></i> Notifications

@@ -29,7 +29,7 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/home', [BloggerDashboardController::class, 'index'])->name('home');
+    Route::get('/home', [BloggerDashboardController::class, 'dashboard'])->name('home');
 });
 
 
@@ -74,6 +74,7 @@ Route::prefix('blogger')->name('blogger.')->group(function () {
     Route::get('/blogs/{blog}/edit', [BloggerController::class, 'edit'])->name('bloggers.edit');
     Route::put('/blogs/{blog}', [BloggerController::class, 'update'])->name('bloggers.update');
     Route::delete('/blogs/{blog}', [BloggerController::class, 'destroy'])->name('bloggers.destroy');
+    Route::get('blogs/pending', [BloggerController::class, 'pending'])->name('bloggers.pending');
 });
 
 
@@ -138,3 +139,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     Route::view('admin/settings', 'admin.settings.settings')->name('admin.settings.settings');
     Route::view('blogger/settings', 'bloggers.settings.settings')->name('bloggers.settings.settings');
+
+Route::post('/profile/focus', [ProfileController::class, 'updateFocus'])
+    ->name('blogger.profile.focus');
+

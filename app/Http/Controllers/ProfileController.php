@@ -21,10 +21,12 @@ class ProfileController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8|confirmed',
+            'bio' => 'nullable|string',
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->bio = $request->bio;
 
         // Only update password if user entered one
         if ($request->filled('password')) {
@@ -92,4 +94,24 @@ class ProfileController extends Controller
 
         return redirect('/')->with('success', 'Profile deleted successfully!');
     }
+
+    public function updateFocus(Request $request)
+{
+    $request->validate([
+        'focus' => 'required|string|in:tech,design,writing,marketing,business',
+    ]);
+
+    $user = auth()->user();
+
+    // lock it if already set (optional but smart)
+    if ($user->focus !== null) {
+        return redirect()->back();
+    }
+
+    $user->focus = $request->focus;
+    $user->save();
+
+    return redirect()->route('/home');
+}
+
 }
