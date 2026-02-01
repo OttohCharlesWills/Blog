@@ -111,7 +111,8 @@ class ProfileController extends Controller
     $user->focus = $request->focus;
     $user->save();
 
-    return redirect()->route('/home');
+    return redirect('/home');
+
 }
 
 }
