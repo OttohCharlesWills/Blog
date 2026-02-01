@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 
@@ -97,13 +98,14 @@ class ProfileController extends Controller
 
     public function updateFocus(Request $request)
 {
+    $focuses = array_keys(config('blog_guidelines.focus'));
+
     $request->validate([
-        'focus' => 'required|string|in:tech,design,writing,marketing,business',
+        'focus' => ['required', 'string', Rule::in($focuses)],
     ]);
 
     $user = auth()->user();
 
-    // lock it if already set (optional but smart)
     if ($user->focus !== null) {
         return redirect()->back();
     }
@@ -111,8 +113,8 @@ class ProfileController extends Controller
     $user->focus = $request->focus;
     $user->save();
 
-    return redirect('/home');
-
+    return redirect()->route('home');
 }
+
 
 }

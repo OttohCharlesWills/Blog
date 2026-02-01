@@ -113,6 +113,27 @@
         </div>
     </div>
 
+    @if(!empty($focusRules))
+        <div class="card mb-4 shadow-sm border-0">
+            <div class="card-body">
+                <h4 class="card-title text-info">
+                    <i class="bi bi-gear-fill me-2"></i>
+                    {{ ucfirst(str_replace('-', ' ', $focus)) }} Guidelines
+                </h4>
+
+                <ul class="list-group list-group-flush mt-2">
+                    @foreach($focusRules as $rule)
+                        <li class="list-group-item border-0 ps-0">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            {{ $rule }}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
+
+
     {{-- FAQs --}}
     <div class="card mb-4 shadow-sm border-0">
         <div class="card-body">
