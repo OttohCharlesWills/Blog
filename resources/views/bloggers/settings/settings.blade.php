@@ -10,7 +10,7 @@
                     <h4 class="fw-bold mb-4">Settings</h4>
 
                     <div class="list-group">
-                        <a href="{{ route('admin.profile.account') }}" class="list-group-item list-group-item-action">
+                        <a href="{{ route('bloggers.profile.account') }}" class="list-group-item list-group-item-action">
                             <i class="bi bi-person-circle me-2"></i> Profile
                         </a>
 
