@@ -54,7 +54,7 @@
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="{{ route('blogger.guidelines.guidelines') }}">
                         <i class="bi bi-chat-left-text"></i>
                         <span>Bloggers Guidelines</span>
                     </a>

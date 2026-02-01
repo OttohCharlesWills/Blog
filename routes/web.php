@@ -10,6 +10,7 @@ use App\Http\Controllers\Blogger\BloggerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Blogger\BloggerDashboardController;
 use App\Http\Controllers\Admin\Activity;
+use App\Http\Controllers\Blogger\BloggerGuidelinesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -143,3 +144,6 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 Route::post('/profile/focus', [ProfileController::class, 'updateFocus'])
     ->name('blogger.profile.focus');
 
+// BLOGGERS GUIDELINES
+
+Route::get('/blogger/guidelines', [BloggerGuidelinesController::class, 'index'])->name('blogger.guidelines.guidelines');
