@@ -17,6 +17,16 @@ class AdminBlogController extends Controller
         return view('admin.blogs.index', compact('blogs'));
     }
 
+    public function pending()
+{
+    $blogs = Blog::where('status', 'pending')
+        ->with('user')
+        ->latest()
+        ->get();
+
+    return view('admin.blogs.pending', compact('blogs'));
+}
+
     // SHOW REVOKE FORM
     public function revokeForm(Blog $blog)
     {
