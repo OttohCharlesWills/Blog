@@ -49,15 +49,19 @@
                     @endif
 
                     {{-- MOVE BACK TO PENDING --}}
-                    @if($blog->status !== 'pending')
+                    {{-- @if($blog->status !== 'pending')
                         <form method="POST"
-                              action="{{ route('admin.blogs.pending', $blog) }}">
+                            action="{{ route('admin.blogs.pending', $blog->id) }}">
                             @csrf
+                            @method('PUT')
+
                             <button class="btn btn-info btn-sm">
                                 Move to Pending 🔁
                             </button>
                         </form>
-                    @endif
+                    @endif --}}
+
+
 
                     {{-- DELETE --}}
                     <form method="POST"

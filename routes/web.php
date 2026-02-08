@@ -71,7 +71,8 @@ Route::middleware(['auth'])
 
         Route::get('/blogs/{blog}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
         Route::put('/blogs/{blog}', [BlogController::class, 'update'])->name('blogs.update');
-        Route::post('/blogs/{blog}/pending', [AdminBlogController::class, 'moveToPending'])->name('blogs.pending');
+        Route::put('/blogs/{blog}/pending',[AdminBlogController::class, 'moveToPending'])->name('blogs.pending');
+
 
     });
 
