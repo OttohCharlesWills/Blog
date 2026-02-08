@@ -58,14 +58,21 @@ Route::middleware(['auth'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
-
-        Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
         Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
         Route::post('/blogs', [BlogController::class, 'store'])->name('blogs.store');
 
+        Route::get('/blogs', [AdminBlogController::class, 'index'])->name('blogs.index');
+
+        Route::get('/blogs/{blog}/revoke', [AdminBlogController::class, 'revokeForm'])->name('blogs.revoke.form');
+
+        Route::post('/blogs/{blog}/revoke/send', [AdminBlogController::class, 'revokeSend'])->name('blogs.revoke.send');
+
+        Route::delete('/blogs/{blog}', [AdminBlogController::class, 'destroy'])->name('blogs.destroy');
+
         Route::get('/blogs/{blog}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
         Route::put('/blogs/{blog}', [BlogController::class, 'update'])->name('blogs.update');
-        Route::delete('/blogs/{blog}', [BlogController::class, 'destroy'])->name('blogs.destroy');
+        Route::post('/blogs/{blog}/pending', [AdminBlogController::class, 'moveToPending'])->name('blogs.pending');
+
     });
 
 Route::prefix('blogger')->name('blogger.')->group(function () {
