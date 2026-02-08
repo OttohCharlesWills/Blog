@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Blogger;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
-use App\Models\Activity;
+use App\Models\activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
