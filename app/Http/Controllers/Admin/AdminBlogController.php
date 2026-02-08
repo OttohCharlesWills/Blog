@@ -17,6 +17,18 @@ class AdminBlogController extends Controller
         return view('admin.blogs.index', compact('blogs'));
     }
 
+    public function approve(Blog $blog)
+{
+    $blog->update(['status' => 'published']);
+
+    Activity::log(
+        "Blog approved",
+        "Admin approved blog: {$blog->title}"
+    );
+
+    return back()->with('success', 'Blog approved');
+}
+
     public function pending()
 {
     $blogs = Blog::where('status', 'pending')
