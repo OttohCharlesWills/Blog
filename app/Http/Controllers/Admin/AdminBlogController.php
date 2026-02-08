@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Blog;
-use App\Models\Activity;
+use App\Models\activity;
 use Illuminate\Support\Facades\Mail;
 
 class AdminBlogController extends Controller
