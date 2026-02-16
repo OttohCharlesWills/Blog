@@ -35,45 +35,87 @@ class BloggerController extends Controller
         return view('bloggers.blogs.create');
     }
 
+    // public function store(Request $request)
+    // {
+    //         $request->validate([
+    //         'title' => 'required|string|max:255',
+    //         'content' => 'required',
+    //         'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+    //     ]);
+
+    //     $coverPath = null;
+
+    //     if ($request->hasFile('cover_image')) {
+    //         $uploadedFileUrl = Cloudinary::upload($request->file('cover_image')->getRealPath(), [
+    //             'folder' => 'blog_covers',
+    //             'overwrite' => true,
+    //             'resource_type' => 'image'
+    //         ])->getSecurePath();
+
+    //         $coverPath = $uploadedFileUrl; // this is the full Cloudinary URL
+    //     }
+
+    //     $blog = Blog::create([
+    //         'user_id' => auth()->id(),
+    //         'title' => $request->title,
+    //         'slug' => Str::slug($request->title) . '-' . uniqid(),
+    //         'content' => $request->content,
+    //         'cover_image' => $coverPath,
+    //         'status' => 'pending',
+    //     ]);
+
+    //     // 🔥 ACTIVITY LOG
+    //     Activity::log(
+    //         'Blog Submitted',
+    //         auth()->user()->name . ' submitted a blog titled "' . $blog->title . '"'
+    //     );
+
+    //     return redirect()
+    //         ->route('blogger.bloggers.index')
+    //         ->with('success', 'Blog submitted for approval ✅');
+    // }
+
     public function store(Request $request)
-    {
-            $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required',
-            'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-        ]);
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'sub_title' => 'required|string|max:255', // don't forget this now
+        'content' => 'required',
+        'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+    ]);
 
-        $coverPath = null;
+    $coverPath = null;
 
-        if ($request->hasFile('cover_image')) {
-            $uploadedFileUrl = Cloudinary::upload($request->file('cover_image')->getRealPath(), [
-                'folder' => 'blog_covers',
-                'overwrite' => true,
-                'resource_type' => 'image'
-            ])->getSecurePath();
-
-            $coverPath = $uploadedFileUrl; // this is the full Cloudinary URL
-        }
-
-        $blog = Blog::create([
-            'user_id' => auth()->id(),
-            'title' => $request->title,
-            'slug' => Str::slug($request->title) . '-' . uniqid(),
-            'content' => $request->content,
-            'cover_image' => $coverPath,
-            'status' => 'pending',
-        ]);
-
-        // 🔥 ACTIVITY LOG
-        Activity::log(
-            'Blog Submitted',
-            auth()->user()->name . ' submitted a blog titled "' . $blog->title . '"'
-        );
-
-        return redirect()
-            ->route('blogger.bloggers.index')
-            ->with('success', 'Blog submitted for approval ✅');
+    if ($request->hasFile('cover_image')) {
+        $coverPath = Cloudinary::upload($request->file('cover_image')->getRealPath(), [
+            'folder' => 'blog_covers',
+            'overwrite' => true,
+            'resource_type' => 'image'
+        ])->getSecurePath();
     }
+
+    $blog = Blog::create([
+        'user_id' => auth()->id(),
+        'title' => $request->title,
+        'sub_title' => $request->sub_title, // new column
+        'slug' => Str::slug($request->title) . '-' . uniqid(),
+        'content' => $request->content,
+        'cover_image' => $coverPath,
+        'status' => 'pending',
+        'focus' => auth()->user()->focus, // 🔥 auto-fill from user
+    ]);
+
+    // 🔥 ACTIVITY LOG
+    Activity::log(
+        'Blog Submitted',
+        auth()->user()->name . ' submitted a blog titled "' . $blog->title . '"'
+    );
+
+    return redirect()
+        ->route('blogger.bloggers.index')
+        ->with('success', 'Blog submitted for approval ✅');
+}
+
 
     public function edit(Blog $blog)
     {

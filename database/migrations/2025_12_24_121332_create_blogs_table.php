@@ -15,19 +15,25 @@ return new class extends Migration {
 
             // 📝 core blog data
             $table->string('title');
+            $table->string('sub_title'); 
             $table->string('slug')->unique();
-            $table->longText('content'); // JSON from Editor.js
+            $table->longText('content'); 
             $table->string('cover_image')->nullable();
+            
+            // 🎯 user focus (auto-filled from user)
+            $table->string('focus')->nullable(); // can be nullable if user hasn't set it yet
 
             // 🚦 blog control
             $table->enum('status', ['draft', 'pending', 'published', 'revoked'])
-                  ->default('draft');
+                ->default('draft');
 
             // 📅 publishing
             $table->timestamp('published_at')->nullable();
 
             $table->timestamps();
         });
+
+
     }
 
     public function down(): void

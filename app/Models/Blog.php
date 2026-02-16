@@ -18,6 +18,8 @@ class Blog extends Model
         'cover_image',
         'status',
         'published_at',
+        'sub_title',
+        'focus', // 🔥 add this
     ];
 
     protected $casts = [

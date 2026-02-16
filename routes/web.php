@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminBlogController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Blogger\BloggerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\Blogger\BloggerDashboardController;
 use App\Http\Controllers\Admin\Activity;
 use App\Http\Controllers\Blogger\BloggerGuidelinesController;
@@ -23,9 +24,8 @@ use App\Http\Controllers\Blogger\BloggerGuidelinesController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [BlogsController::class, 'blogsforwelcome'])->name('welcome');
+// Route::get('/', [BlogsController::class, 'categoriesForWelcome'])->name('welcome');
 
 Auth::routes(['verify' => true]);
 
