@@ -79,33 +79,42 @@ class BloggerController extends Controller
 {
     $request->validate([
         'title' => 'required|string|max:255',
-        'sub_title' => 'required|string|max:255', // don't forget this now
+        'sub_title' => 'required|string|max:255',
         'content' => 'required',
+        'excerpt' => 'nullable|string|max:600',
         'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
     ]);
 
     $coverPath = null;
 
     if ($request->hasFile('cover_image')) {
-        $coverPath = Cloudinary::upload($request->file('cover_image')->getRealPath(), [
-            'folder' => 'blog_covers',
-            'overwrite' => true,
-            'resource_type' => 'image'
-        ])->getSecurePath();
+        $coverPath = Cloudinary::upload(
+            $request->file('cover_image')->getRealPath(),
+            [
+                'folder' => 'blog_covers',
+                'overwrite' => true,
+                'resource_type' => 'image'
+            ]
+        )->getSecurePath();
     }
+
+    // 🔥 AUTO reading time (200 words per min)
+    $wordCount = str_word_count(strip_tags($request->content));
+    $timeRead = max(1, ceil($wordCount / 200));
 
     $blog = Blog::create([
         'user_id' => auth()->id(),
         'title' => $request->title,
-        'sub_title' => $request->sub_title, // new column
+        'sub_title' => $request->sub_title,
         'slug' => Str::slug($request->title) . '-' . uniqid(),
         'content' => $request->content,
+        'excerpt' => $request->excerpt ?? Str::limit(strip_tags($request->content), 150),
         'cover_image' => $coverPath,
+        'time_read' => $timeRead,
         'status' => 'pending',
-        'focus' => auth()->user()->focus, // 🔥 auto-fill from user
+        'focus' => auth()->user()->focus,
     ]);
 
-    // 🔥 ACTIVITY LOG
     Activity::log(
         'Blog Submitted',
         auth()->user()->name . ' submitted a blog titled "' . $blog->title . '"'
@@ -115,6 +124,7 @@ class BloggerController extends Controller
         ->route('blogger.bloggers.index')
         ->with('success', 'Blog submitted for approval ✅');
 }
+
 
 
     public function edit(Blog $blog)

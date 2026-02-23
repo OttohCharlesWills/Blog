@@ -197,3 +197,29 @@
 /****************************** END OF SIDEBAR STYLING  ************************/
 
 
+.blog-form-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 32px;
+}
+
+.right-panel {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.hint-box {
+    font-size: 0.85rem;
+    color: #666;
+    background: #eee;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .blog-form-grid {
+        grid-template-columns: 1fr;
+    }
+}

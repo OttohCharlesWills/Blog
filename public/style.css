@@ -322,16 +322,8 @@
 /******************************* END THE WELCOME.BLADE.PHP PAGGE FEATURES ********************************/
 
 
-
-
-
-
-
-
-
-
-
 /******************************* FOR THE WELCOME.BLADE.PHP PAGGE CATEORY ********************************/
+
 
 /* Section styling */
 .categories-section {
@@ -364,24 +356,19 @@
 }
 
 /* Grid layout */
-.categories-grid {
+#categoriesGrid {
     display: grid;
     gap: 2rem;
     /* grid-template-columns: 1fr; mobile default */
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-@media (min-width: 640px) {
-    .categories-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
 
-@media (min-width: 768px) {
-    .categories-grid {
+/* @media (min-width: 768px) {
+    #categoriesGrid {
         grid-template-columns: repeat(3, 1fr);
     }
-}
+} */
 
 /* Card styling */
 .category-card {
@@ -445,3 +432,137 @@
     text-decoration: underline;
     color: #ec4899; /* pink accent */
 }
+
+
+
+
+
+
+/******************************* END THE WELCOME.BLADE.PHP PAGGE CATEGORY ********************************/
+
+
+/******************************* FOR THE WELCOME.BLADE.PHP PAGGE TRENDING BLOGS ********************************/
+
+
+
+
+
+
+
+.trending-section {
+    padding: 2rem;
+    background-color: #111; /* dark background like your pic */
+    color: #fff;
+    
+    font-family: 'Playfair Display', serif;
+}
+
+.trending-section h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.trending-section p {
+    color: #aaa;
+    margin-bottom: 1rem;
+}
+
+.trending-section .author {
+    color: #aaa;
+    margin-bottom: .5rem;
+}
+
+.trending-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.trending-card {
+    display: flex;
+    border: 1px solid rgba(128, 128, 128, 0.247);
+    border-radius: 12px;
+    overflow: hidden;
+    align-items: flex-start;
+    padding: 0.8rem 0.5rem 0.5rem 1.1rem;
+    position: relative;
+    gap: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.trending-card:hover {
+    transform: translateY(-5px);
+}
+
+.rank-badge {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    background-color: rgba(87, 57, 3, 0.445);
+    color: rgb(253, 199, 0);
+    padding: 0.5rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    align-self: flex-start;
+}
+
+.trending-card img {
+    width: 100px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    position: relative;
+}
+
+.hot-badge {
+    position: absolute;
+    top: 23px;
+    right: 235px;
+    background-color: #f05526;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+}
+
+.tag {
+    
+    border: 1px solid rgba(128, 128, 128, 0.247);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+    align-self: flex-start;
+    font-family: 'Inter', sans-serif;
+}
+
+.content h3 {
+    font-size: 1rem;
+    margin: 0.25rem 0;
+}
+
+.author {
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+.meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.75rem;
+    color: #ccc;
+    margin-top: auto;
+}
+

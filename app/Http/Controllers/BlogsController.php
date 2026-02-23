@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class BlogsController extends Controller
 {
@@ -38,7 +39,13 @@ class BlogsController extends Controller
                 ];
             });
 
-        return view('welcome', compact('featuredBlogs', 'categories'));
+        $trendingBlogs = Blog::where('status', 'published')
+        ->where('created_at', '>=', Carbon::now()->subDays(7))
+        ->orderByDesc('views_count')
+        ->take(6)
+        ->get();
+
+        return view('welcome', compact('featuredBlogs', 'categories', 'trendingBlogs'));
     }
 
     // helper for mapping focus to FA icon

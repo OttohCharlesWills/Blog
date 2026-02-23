@@ -152,7 +152,7 @@
             </p>
 
             <!-- Categories Grid -->
-            <div id="categoriesGrid" class="grid gap-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+            <div id="categoriesGrid" class="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
                 @foreach ($categories as $index => $category)
                     <a href="" class="category-card block bg-gray-900 rounded-lg p-6 hover:shadow-xl transition-all duration-300 {{ $index >= 4 ? 'hidden extra-category' : '' }}">
                         <div class="icon mb-4 w-12 h-12 flex items-center rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white text-xl mx-auto">
@@ -181,6 +181,48 @@
             @endif
         </div>
     </section>
+
+    <section class="trending-section">
+        <h2>🔥 Trending This Week</h2>
+        <p>The most popular articles right now</p>
+
+        <div class="trending-grid">
+            @foreach ($trendingBlogs as $index => $blog)
+                <div class="trending-card">
+
+                    {{-- Rank number --}}
+                    <div class="rank-badge">
+                        {{ $index + 1 }}
+                    </div>
+
+                    {{-- Cover image --}}
+                    <img src="{{ $blog->cover_image }}" alt="{{ $blog->title }}">
+
+                    <div class="content">
+                        <span class="tag">
+                            {{ ucfirst($blog->focus ?? 'General') }}
+                        </span>
+
+                        {{-- HOT badge --}}
+                        @if($blog->views_count > 100)
+                            <span class="hot-badge"><i class="fa-solid fa-arrow-trend-up" style="padding-right: 3px"></i>  Hot</span>
+                        @endif
+
+                        <h3>{{ $blog->title }}</h3>
+                        <p class="author">
+                            by {{ $blog->user->name }}
+                        </p>
+
+                        <div class="meta">
+                            <span><i class="fa-solid fa-eye"></i> {{ number_format($blog->views_count) }}</span>
+                            <span><i class="fa-regular fa-clock"></i> {{ $blog->time_read }} min</span>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </section>
+
 </body>
     <script>
         const toggleBtn = document.getElementById('toggleCategories');
