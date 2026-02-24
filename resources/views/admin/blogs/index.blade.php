@@ -40,35 +40,50 @@
 
                 <td class="d-flex gap-2 flex-wrap">
 
+                    {{-- VIEW --}}
+                    <a href="{{ route('admin.blogs.show', $blog) }}"
+                    class="btn btn-primary btn-sm">
+                        View 👁
+                    </a>
+
+                    {{-- FEATURE / UNFEATURE --}}
+                    @if(!$blog->is_featured)
+                        <form method="POST"
+                            action="{{ route('admin.blogs.feature', $blog) }}">
+                            @csrf
+                            @method('PATCH')
+
+                            <button class="btn btn-warning btn-sm">
+                                ⭐ Feature
+                            </button>
+                        </form>
+                    @else
+                        <form method="POST"
+                            action="{{ route('admin.blogs.unfeature', $blog) }}">
+                            @csrf
+                            @method('PATCH')
+
+                            <button class="btn btn-secondary btn-sm">
+                                ❌ Remove Feature
+                            </button>
+                        </form>
+                    @endif
+
                     {{-- REVOKE --}}
                     @if($blog->status !== 'revoked')
                         <a href="{{ route('admin.blogs.revoke.form', $blog) }}"
-                           class="btn btn-warning btn-sm">
+                        class="btn btn-warning btn-sm">
                             Revoke 🚫
                         </a>
                     @endif
 
-                    {{-- MOVE BACK TO PENDING --}}
-                    {{-- @if($blog->status !== 'pending')
-                        <form method="POST"
-                            action="{{ route('admin.blogs.pending', $blog->id) }}">
-                            @csrf
-                            @method('PUT')
-
-                            <button class="btn btn-info btn-sm">
-                                Move to Pending 🔁
-                            </button>
-                        </form>
-                    @endif --}}
-
-
-
                     {{-- DELETE --}}
                     <form method="POST"
-                          action="{{ route('admin.blogs.destroy', $blog) }}"
-                          onsubmit="return confirm('Delete permanently?')">
+                        action="{{ route('admin.blogs.destroy', $blog) }}"
+                        onsubmit="return confirm('Delete permanently?')">
                         @csrf
                         @method('DELETE')
+
                         <button class="btn btn-danger btn-sm">
                             Delete 🗑
                         </button>

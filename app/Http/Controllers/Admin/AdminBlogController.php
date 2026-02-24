@@ -108,4 +108,39 @@ class AdminBlogController extends Controller
 
         return back()->with('success', 'Blog deleted');
     }
+
+    // FEATURES
+
+    public function feature(Blog $blog)
+    {
+        $blog->update([
+            'is_featured' => true,
+        ]);
+
+        Activity::log(
+            'Blog featured',
+            "Admin featured blog: {$blog->title}"
+        );
+
+        return back()->with('success', 'Blog marked as featured ⭐');
+    }
+
+    public function unfeature(Blog $blog)
+    {
+        $blog->update([
+            'is_featured' => false,
+        ]);
+
+        Activity::log(
+            'Blog unfeatured',
+            "Admin removed featured status from: {$blog->title}"
+        );
+
+        return back()->with('success', 'Feature removed');
+    }
+
+    public function show(Blog $blog)
+    {
+        return view('admin.blogs.show', compact('blog'));
+    }
 }

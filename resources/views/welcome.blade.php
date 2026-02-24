@@ -7,6 +7,8 @@
 
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
@@ -223,7 +225,85 @@
         </div>
     </section>
 
+    <section class="carousel"
+         x-data="carousel()"
+         x-init="start()">
+
+        <div class="carousel-container">
+
+            <div class="carousel-header">
+                <div class="carousel-header-top">
+                    <div class="carousel-icon">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h2>Editor's Picks</h2>
+                </div>
+                <p>Handpicked stories we think you'll love</p>
+            </div>
+
+            <div class="carousel-wrapper">
+
+                <div class="carousel-box">
+
+                    @foreach($editorsPicks as $index => $post)
+
+                        <div x-show="current === {{ $index }}"
+                            x-transition.opacity.duration.500ms
+                            class="carousel-slide">
+
+                            <img src="{{ $post->cover_image }}">
+
+                            <div class="carousel-overlay"></div>
+
+                            <div class="carousel-content">
+
+                                <span class="carousel-badge">
+                                    {{ ucfirst($post->focus ?? 'General') }}
+                                </span>
+
+                                <h3>{{ $post->title }}</h3>
+
+                                <p class="carousel-excerpt">
+                                    {{ $post->excerpt }}
+                                </p>
+
+                                <div class="carousel-meta">
+                                    By {{ $post->user->name }}
+                                    •
+                                    {{ $post->time_read }} min read
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    @endforeach
+
+                    <button @click="prev" class="carousel-nav carousel-nav-left">
+                        <i class="fa fa-chevron-left"></i>
+                    </button>
+
+                    <button @click="next" class="carousel-nav carousel-nav-right">
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+
+                    <div class="carousel-dots">
+                        @foreach($editorsPicks as $index => $post)
+                            <button @click="go({{ $index }})"
+                                    :class="current === {{ $index }} ? 'active' : ''"
+                                    class="carousel-dot">
+                            </button>
+                        @endforeach
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
 </body>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         const toggleBtn = document.getElementById('toggleCategories');
         const extraCategories = document.querySelectorAll('.extra-category');
@@ -233,4 +313,31 @@
             toggleBtn.textContent = toggleBtn.textContent === 'See More' ? 'See Less' : 'See More';
         });
     </script>
+    <script>
+        function carousel() {
+            return {
+                current: 0,
+                total: {{ $editorsPicks->count() }},
+                interval: null,
+
+                start() {
+                    this.interval = setInterval(() => {
+                        this.next();
+                    }, 10000);
+                },
+
+                next() {
+                    this.current = (this.current + 1) % this.total;
+                },
+
+                prev() {
+                    this.current = (this.current - 1 + this.total) % this.total;
+                },
+
+                go(index) {
+                    this.current = index;
+                }
+            }
+        }
+        </script>
 </html>

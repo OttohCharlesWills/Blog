@@ -73,6 +73,12 @@ Route::middleware(['auth'])
         Route::put('/blogs/{blog}', [BlogController::class, 'update'])->name('blogs.update');
         Route::put('/blogs/{blog}/pending',[AdminBlogController::class, 'moveToPending'])->name('blogs.pending');
 
+            Route::patch('/{blog}/feature', [AdminBlogController::class, 'feature'])->name('blogs.feature');
+
+            Route::patch('/{blog}/unfeature', [AdminBlogController::class, 'unfeature'])->name('blogs.unfeature');
+
+            Route::get('/{blog}', [AdminBlogController::class, 'show'])->name('blogs.show');
+
 
     });
 

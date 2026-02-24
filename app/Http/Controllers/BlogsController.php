@@ -45,7 +45,13 @@ class BlogsController extends Controller
         ->take(6)
         ->get();
 
-        return view('welcome', compact('featuredBlogs', 'categories', 'trendingBlogs'));
+        $editorsPicks = Blog::where('is_featured', true)
+        ->where('status', 'published')
+        ->latest()
+        ->take(4)
+        ->get();
+
+        return view('welcome', compact('featuredBlogs', 'categories', 'trendingBlogs', 'editorsPicks'));
     }
 
     // helper for mapping focus to FA icon
