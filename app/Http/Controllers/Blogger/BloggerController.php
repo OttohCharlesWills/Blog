@@ -7,6 +7,8 @@ use App\Models\Blog;
 use App\Models\activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Mail\BlogSubmittedMail;
+use Illuminate\Support\Facades\Mail;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class BloggerController extends Controller
@@ -114,6 +116,10 @@ class BloggerController extends Controller
         'status' => 'pending',
         'focus' => auth()->user()->focus,
     ]);
+
+    // Send confirmation email
+    Mail::to(auth()->user()->email)
+        ->send(new BlogSubmittedMail($blog));
 
     Activity::log(
         'Blog Submitted',

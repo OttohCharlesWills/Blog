@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\activity;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\BlogRevokedMail;
 
 class AdminBlogController extends Controller
 {
@@ -31,7 +32,7 @@ class AdminBlogController extends Controller
 
     public function pending()
 {
-    $blogs = Blog::where('status', 'pending')
+    $blogs = Blog::where('status', ['pending', 'revoked'])
         ->with('user')
         ->latest()
         ->get();
@@ -56,20 +57,8 @@ class AdminBlogController extends Controller
             'status' => 'revoked'
         ]);
 
-        Mail::raw(
-            "Hello {$blog->user->name},
-
-                Your blog titled \"{$blog->title}\" has been revoked.
-
-                Reason:
-                {$request->reason}
-
-                — Admin",
-            function ($message) use ($blog) {
-                $message->to($blog->user->email)
-                        ->subject('Blog Revoked');
-            }
-        );
+        Mail::to($blog->user->email)
+        ->send(new BlogRevokedMail($blog, $request->reason));
 
         Activity::log(
             'Blog revoked',

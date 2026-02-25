@@ -40,7 +40,7 @@ class BlogsController extends Controller
             });
 
         $trendingBlogs = Blog::where('status', 'published')
-        ->where('created_at', '>=', Carbon::now()->subDays(7))
+        ->where('created_at', '>=', Carbon::now()->subDays(14))
         ->orderByDesc('views_count')
         ->take(6)
         ->get();
