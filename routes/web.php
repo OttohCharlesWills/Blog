@@ -81,7 +81,7 @@ Route::middleware(['auth'])
 
             Route::patch('/{blog}/unfeature', [AdminBlogController::class, 'unfeature'])->name('blogs.unfeature');
 
-            Route::get('/{blog}', [AdminBlogController::class, 'show'])->name('blogs.show');
+            Route::get('/view/{blog}', [AdminBlogController::class, 'show'])->name('blogs.show');
 
 
     });
