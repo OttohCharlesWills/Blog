@@ -50,6 +50,10 @@ Route::middleware(['auth'])
             ->name('dashboard');
     });
 
+    Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
 
 
 // ROUTE FOR ADMIN BLOG

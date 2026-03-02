@@ -44,12 +44,12 @@
 <body>
 
     <header class="navbar">
-        <div class="logo">LOGO</div>
+        <div class="logo"><a href="{{ route('welcome') }}">LOGO</a></div>
 
         <nav class="nav-links">
             <a href="#">Blog</a>
             <a href="#">Topics</a>
-            <a href="#">About</a>
+            <a href="{{ route('about') }}">About</a>
         </nav>
 
         @if (Route::has('login'))

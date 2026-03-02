@@ -20,6 +20,11 @@
     letter-spacing: 1px;
 }
 
+.logo a{
+    text-decoration: none;
+    color: white;
+}
+
 .navbar nav a {
     margin: 0 16px;
     text-decoration: none;
